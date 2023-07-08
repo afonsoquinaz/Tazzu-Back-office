@@ -1,4 +1,19 @@
 import React from "react";
+import axios from "axios";
+
+const sendEmail = async (email, subject, text) => {
+  try {
+    const response = await axios.post("http://localhost:8001/send-email", {
+      email,
+      subject,
+      text,
+    });
+
+    console.log(response.data);
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 const Order = ({
   setSelectedState,
@@ -64,6 +79,7 @@ const Order = ({
           onClick={() => {
             updateOrderState("new");
             setSelectedState("new");
+            sendEmail(selectedOrder.email, "Flight Status Updated", "New");
           }}
           className="col-start-1 border rounded text-xl font-bold text-slate-800 p-4 m-2 bg-blue-200 border-blue-400 hover:bg-blue-300"
         >
@@ -75,6 +91,7 @@ const Order = ({
           onClick={() => {
             updateOrderState("sent");
             setSelectedState("sent");
+            sendEmail(selectedOrder.email, "Flight Status Updated", "Sent");
           }}
           className="col-start-2  border rounded text-xl font-bold text-slate-800 p-4 m-2 bg-blue-200 border-blue-400 hover:bg-blue-300"
         >
@@ -86,6 +103,7 @@ const Order = ({
           onClick={() => {
             updateOrderState("success");
             setSelectedState("success");
+            sendEmail(selectedOrder.email, "Flight Status Updated", "Success");
           }}
           className="col-start-3 border rounded text-xl font-bold text-slate-800 p-4 m-2 bg-green-200 border-green-400 hover:bg-green-300"
         >
@@ -97,6 +115,7 @@ const Order = ({
           onClick={() => {
             updateOrderState("warning");
             setSelectedState("warning");
+            sendEmail(selectedOrder.email, "Flight Status Updated", "Warning");
           }}
           className="col-start-4 border rounded text-xl font-bold text-slate-800 p-4 m-2 bg-red-200 border-red-400 hover:bg-red-300"
         >
@@ -109,6 +128,7 @@ const Order = ({
           onClick={() => {
             updateOrderState("archived");
             setSelectedState("archived");
+            sendEmail(selectedOrder.email, "Flight Status Updated", "Archived");
           }}
           className="col-start-5 border rounded text-xl font-bold text-slate-800 p-4 m-2 bg-slate-200 border-slate-400 hover:bg-slate-300"
         >
