@@ -2,6 +2,7 @@ import React from "react";
 
 const StateButton = ({
   newCount,
+  pickedCount,
   sentCount,
   successCount,
   warningCount,
@@ -10,7 +11,7 @@ const StateButton = ({
   setSelectedState,
   setSelectedOrder,
 }) => (
-  <div className="grid grid-cols-5 gap-4">
+  <div className="grid grid-cols-6 gap-4">
     <button
       className={`border rounded text-xl font-bold text-slate-800 p-4 m-2 bg-blue-200 border-blue-400 hover:bg-blue-300
      ${
@@ -23,6 +24,21 @@ const StateButton = ({
       }} // Set selectedState to 'NEW' when clicked
     >
       NEW - {newCount}
+    </button>
+    <button
+      className={`border rounded text-xl font-bold text-slate-800 p-4 m-2 bg-blue-200 border-blue-400 hover:bg-blue-300
+     ${
+       selectedState === "picked"
+         ? "bg-blue-500 hover:bg-blue-500"
+         : "bg-blue-200"
+     }
+     `}
+      onClick={() => {
+        setSelectedState("picked");
+        setSelectedOrder(null);
+      }} // Set selectedState to 'NEW' when clicked
+    >
+      PICKED - {pickedCount}
     </button>
     <button
       className={`border rounded text-xl font-bold text-slate-800 p-4 m-2 bg-blue-200 border-blue-400 hover:bg-blue-300

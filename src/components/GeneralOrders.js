@@ -18,6 +18,7 @@ function GeneralOrders() {
 
   // Create five state variables to hold the counts
   const [newCount, setNewCount] = useState(0);
+  const [pickedCount, setPickedCount] = useState(0);
   const [sentCount, setSentCount] = useState(0);
   const [successCount, setSuccessCount] = useState(0);
   const [warningCount, setWarningCount] = useState(0);
@@ -34,14 +35,20 @@ function GeneralOrders() {
     });
   }, []);
 
-  // This function updates the state of the selected order.
+  // This function updates the state of the order.
   const updateOrderState = async (newState) => {
     if (selectedOrder) {
       const orderRef = doc(db, "Orders", selectedOrder.id);
+      const currentDate = new Date().toISOString(); // Gets current date and time.
       await updateDoc(orderRef, {
         state: newState,
+        [`${newState}Date`]: currentDate, // Updates firestore with new date field.
       });
-      setSelectedOrder((prevState) => ({ ...prevState, state: newState })); // Updates local state.
+      setSelectedOrder((prevState) => ({
+        ...prevState,
+        state: newState,
+        [`${newState}Date`]: currentDate, // Updates local state with new date field.
+      }));
     } else {
       alert("No order selected.");
     }
@@ -50,6 +57,7 @@ function GeneralOrders() {
   // useEffect to calculate counts each time `orders` array changes
   useEffect(() => {
     setNewCount(orders.filter((order) => order.state === "new").length);
+    setPickedCount(orders.filter((order) => order.state === "picked").length);
     setSentCount(orders.filter((order) => order.state === "sent").length);
     setSuccessCount(orders.filter((order) => order.state === "success").length);
     setWarningCount(orders.filter((order) => order.state === "warning").length);
@@ -63,6 +71,7 @@ function GeneralOrders() {
       <div>
         <StateButton
           newCount={newCount}
+          pickedCount={pickedCount}
           sentCount={sentCount}
           successCount={successCount}
           warningCount={warningCount}

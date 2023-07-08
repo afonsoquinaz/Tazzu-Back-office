@@ -73,7 +73,7 @@ const Order = ({
         ? selectedOrder.country
         : "Not provided"}
     </div> */}
-    <div className="col-span-2 grid grid-cols-5 gap-4">
+    <div className="col-span-2 grid grid-cols-6 gap-4">
       {!(selectedState == "new") && (
         <button
           onClick={() => {
@@ -86,6 +86,18 @@ const Order = ({
           NEW
         </button>
       )}
+      {!(selectedState == "picked") && (
+        <button
+          onClick={() => {
+            updateOrderState("picked");
+            setSelectedState("picked");
+            sendEmail(selectedOrder.email, "Flight Status Updated", "picked");
+          }}
+          className="col-start-2 border rounded text-xl font-bold text-slate-800 p-4 m-2 bg-blue-200 border-blue-400 hover:bg-blue-300"
+        >
+          PICKED
+        </button>
+      )}
       {!(selectedState == "sent") && (
         <button
           onClick={() => {
@@ -93,7 +105,7 @@ const Order = ({
             setSelectedState("sent");
             sendEmail(selectedOrder.email, "Flight Status Updated", "Sent");
           }}
-          className="col-start-2  border rounded text-xl font-bold text-slate-800 p-4 m-2 bg-blue-200 border-blue-400 hover:bg-blue-300"
+          className="col-start-3  border rounded text-xl font-bold text-slate-800 p-4 m-2 bg-blue-200 border-blue-400 hover:bg-blue-300"
         >
           SENT
         </button>
@@ -105,7 +117,7 @@ const Order = ({
             setSelectedState("success");
             sendEmail(selectedOrder.email, "Flight Status Updated", "Success");
           }}
-          className="col-start-3 border rounded text-xl font-bold text-slate-800 p-4 m-2 bg-green-200 border-green-400 hover:bg-green-300"
+          className="col-start-4 border rounded text-xl font-bold text-slate-800 p-4 m-2 bg-green-200 border-green-400 hover:bg-green-300"
         >
           SUCCESS
         </button>
@@ -117,7 +129,7 @@ const Order = ({
             setSelectedState("warning");
             sendEmail(selectedOrder.email, "Flight Status Updated", "Warning");
           }}
-          className="col-start-4 border rounded text-xl font-bold text-slate-800 p-4 m-2 bg-red-200 border-red-400 hover:bg-red-300"
+          className="col-start-5 border rounded text-xl font-bold text-slate-800 p-4 m-2 bg-red-200 border-red-400 hover:bg-red-300"
         >
           WARNING
         </button>
@@ -130,7 +142,7 @@ const Order = ({
             setSelectedState("archived");
             sendEmail(selectedOrder.email, "Flight Status Updated", "Archived");
           }}
-          className="col-start-5 border rounded text-xl font-bold text-slate-800 p-4 m-2 bg-slate-200 border-slate-400 hover:bg-slate-300"
+          className="col-start-6 border rounded text-xl font-bold text-slate-800 p-4 m-2 bg-slate-200 border-slate-400 hover:bg-slate-300"
         >
           ARCHIVED
         </button>
