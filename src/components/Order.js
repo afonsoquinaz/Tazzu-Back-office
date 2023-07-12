@@ -56,6 +56,8 @@ const Order = ({
     <div className="grid grid-cols-2 gap-4">
       <div className="text-sm font-semibold text-blue-700">Id:</div>
       <div>{selectedOrder.id ? selectedOrder.id : "Not provided"}</div>
+      <div className="text-sm font-semibold text-blue-700">Card Owner:</div>
+      <div>{selectedOrder.cardOwner ? selectedOrder.cardOwner : "Not provided"}</div>
 
       <div className="text-sm font-semibold text-blue-700">Stamp:</div>
       <div className="flex flex-row gap-5">
@@ -112,6 +114,9 @@ const Order = ({
           ? selectedOrder.selectedColor
           : "Not provided"}
       </div>
+      
+      <div className="text-sm font-semibold text-blue-700">Street:</div>
+      <div>{selectedOrder.street ? selectedOrder.street : "Not provided"}</div>
 
       <div className="text-sm font-semibold text-blue-700">Postal Code:</div>
       <div>
@@ -121,8 +126,6 @@ const Order = ({
       <div className="text-sm font-semibold text-blue-700">City:</div>
       <div>{selectedOrder.city ? selectedOrder.city : "Not provided"}</div>
 
-      <div className="text-sm font-semibold text-blue-700">Street:</div>
-      <div>{selectedOrder.street ? selectedOrder.street : "Not provided"}</div>
 
       <div className="text-sm font-semibold text-blue-700">Selected Type:</div>
       <div>
@@ -146,7 +149,7 @@ const Order = ({
         : "Not provided"}
     </div> */}
       <div className="col-span-2 grid grid-cols-6 gap-4">
-        {!(selectedState == "new") && (
+        {!(selectedState === "new") && (
           <button
             onClick={() => {
               updateOrderState("new");
@@ -158,7 +161,7 @@ const Order = ({
             NEW
           </button>
         )}
-        {!(selectedState == "picked") && (
+        {!(selectedState === "picked") && (
           <button
             onClick={() => {
               updateOrderState("picked");
@@ -170,7 +173,7 @@ const Order = ({
             PICKED
           </button>
         )}
-        {!(selectedState == "sent") && (
+        {!(selectedState === "sent") && (
           <button
             onClick={() => {
               updateOrderState("sent");
@@ -182,7 +185,7 @@ const Order = ({
             SENT
           </button>
         )}
-        {!(selectedState == "success") && (
+        {!(selectedState === "success") && (
           <button
             onClick={() => {
               updateOrderState("success");
@@ -198,7 +201,7 @@ const Order = ({
             SUCCESS
           </button>
         )}
-        {!(selectedState == "warning") && (
+        {!(selectedState === "warning") && (
           <button
             onClick={() => {
               updateOrderState("warning");
@@ -215,7 +218,7 @@ const Order = ({
           </button>
         )}
 
-        {!(selectedState == "archived") && (
+        {!(selectedState === "archived") && (
           <button
             onClick={() => {
               updateOrderState("archived");
