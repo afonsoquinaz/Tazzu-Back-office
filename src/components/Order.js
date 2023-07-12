@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { saveAs } from "file-saver";
+import { convertColor } from "../utils/utils";
 
 const sendEmail = async (email, subject, text) => {
   try {
@@ -66,7 +67,7 @@ const Order = ({
             <img
               src={selectedOrder.stamp?.logo}
               alt={`Logo Image`}
-              className="w-[50px] h-[50px] cursor-pointer transition-transform"
+              className={`w-[50px] h-[50px] cursor-pointer transition-transform bg-${convertColor(selectedOrder.selectedColor)}`}
               onClick={(e) => {
                 e.stopPropagation();
                 openModal(selectedOrder.stamp?.logo, 'Logo');
@@ -80,7 +81,7 @@ const Order = ({
             <img
               src={selectedOrder.stamp?.front}
               alt={`Front Image`}
-              className="w-[50px] h-[50px] cursor-pointer transition-transform"
+              className={`w-[50px] h-[50px] cursor-pointer transition-transform bg-${convertColor(selectedOrder.selectedColor)}`}
               onClick={(e) => {
                 e.stopPropagation();
                 openModal(selectedOrder.stamp?.front, 'Front');
@@ -94,7 +95,7 @@ const Order = ({
             <img
               src={selectedOrder.stamp?.back}
               alt={`Back Image`}
-              className="w-[50px] h-[50px] cursor-pointer transition-transform"
+              className={`w-[50px] h-[50px] cursor-pointer transition-transform bg-${convertColor(selectedOrder.selectedColor)}`}
               onClick={(e) => {
                 e.stopPropagation();
                 openModal(selectedOrder.stamp?.back, 'Back');
@@ -245,7 +246,7 @@ const Order = ({
             <img
               src={activeImage.src}
               alt="Modal Image"
-              className="max-w-full max-h-full"
+              className={`max-w-full max-h-full bg-${convertColor(selectedOrder.selectedColor)}`}
             />
             <span className="text-center mt-1">Placement: <span className="font-semibold">{activeImage.placement}</span></span>
             <button
