@@ -1,6 +1,7 @@
 const express = require("express");
 const nodemailer = require("nodemailer");
 const cors = require("cors");
+const { createProxyMiddleware } = require("http-proxy-middleware");
 const app = express();
 
 app.use(express.json());
@@ -46,6 +47,18 @@ app.post("/send-email", async (req, res) => {
       .json({ status: "error", message: "Failed to send the email." });
   }
 });
+
+app.use('/download-image', createProxyMiddleware({
+  target: 'https://firebasestorage.googleapis.com',
+  changeOrigin: true,
+  onProxyRes: function(proxyRes, req, res) {
+    proxyRes.headers["Access-Control-Allow-Origin"] = "*";
+  },
+  pathRewrite: {
+    "^/download-image": "", // Remove the '/image' path prefix
+  },
+}));
+
 
 app.listen(8001, () => {
   console.log("Server is running on port 8001");

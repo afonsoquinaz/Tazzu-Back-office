@@ -90,7 +90,7 @@ function GeneralOrders() {
             ></OrdersList>{" "}
           </div>
           <div className="col-span-7">
-            <div className="col-span-8 border p-6 rounded-lg bg-blue-50 shadow-md">
+            <div className="col-span-8 border p-6 rounded-lg bg-slate-300 shadow-md">
               {selectedOrder ? (
                 <Order
                   orders={orders}
