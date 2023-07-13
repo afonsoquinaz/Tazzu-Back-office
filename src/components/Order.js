@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { AiFillCloseCircle } from 'react-icons/ai';
+import { saveAs } from "file-saver";
+import { convertColor } from "../utils/utils";
 
 const sendEmail = async (email, subject, text, orderId) => {
   try {
@@ -24,25 +27,83 @@ const Order = ({
   selectedOrder,
   selectedState,
 }) => {
-  const [activeImage, setActiveImage] = useState(
-    selectedOrder.stamp?.logo
-      ? selectedOrder.stamp?.logo
-      : selectedOrder.stamp?.front
-      ? selectedOrder.stamp?.front
-      : selectedOrder.stamp?.back
-      ? selectedOrder.stamp?.back
-      : ""
-  );
+  const [activeImage, setActiveImage] = useState({ src: '', placement: '' });
+
+  const [showModal, setShowModal] = useState(false); // State to control the modal visibility
+
+  const openModal = (image, placement) => {
+    setActiveImage({ src: image, placement });
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const downloadImage = async () => {
+    try {
+      const proxyUrl = 'http://localhost:8001';
+      const imageUrl = activeImage.src;
+  
+      const response = await fetch(`${proxyUrl}/download-image${imageUrl.replace('https://firebasestorage.googleapis.com', '')}`);
+      const blob = await response.blob();
+      saveAs(blob, `${activeImage.placement}-${selectedOrder.id}.png`)
+    } catch (error) {
+      console.error("Error downloading image:", error);
+    }
+  };
+  
 
   return (
     <div className="grid grid-cols-2 gap-4">
       <div className="text-sm font-semibold text-blue-700">Id:</div>
       <div>{selectedOrder.id ? selectedOrder.id : "Not provided"}</div>
+      <div className="text-sm font-semibold text-blue-700">Card Owner:</div>
+      <div>{selectedOrder.cardOwner ? selectedOrder.cardOwner : "Not provided"}</div>
 
-      <div className="text-sm font-semibold text-blue-700">Active Image:</div>
-      <div>
-        {activeImage && (
-          <img className="object-contain" src={activeImage} alt="Order Image" />
+      <div className="text-sm font-semibold text-blue-700">Stamp:</div>
+      <div className="flex flex-row gap-5">
+        {selectedOrder.stamp?.logo && (
+          <div className="text-center">
+            <img
+              src={selectedOrder.stamp?.logo}
+              alt={`Logo Image`}
+              className={`w-[50px] h-[50px] cursor-pointer transition-transform bg-${convertColor(selectedOrder.selectedColor)}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal(selectedOrder.stamp?.logo, 'Logo');
+              }}
+            />
+            <span className="text-sm">Logo</span>
+          </div>
+        )}
+        {selectedOrder.stamp?.front && (
+          <div className="text-center">
+            <img
+              src={selectedOrder.stamp?.front}
+              alt={`Front Image`}
+              className={`w-[50px] h-[50px] cursor-pointer transition-transform bg-${convertColor(selectedOrder.selectedColor)}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal(selectedOrder.stamp?.front, 'Front');
+              }}
+            />
+            <span className="text-sm">Front</span>
+          </div>
+        )}
+        {selectedOrder.stamp?.back && (
+          <div className="text-center">
+            <img
+              src={selectedOrder.stamp?.back}
+              alt={`Back Image`}
+              className={`w-[50px] h-[50px] cursor-pointer transition-transform bg-${convertColor(selectedOrder.selectedColor)}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                openModal(selectedOrder.stamp?.back, 'Back');
+              }}
+            />
+            <span className="text-sm">Back</span>
+          </div>
         )}
       </div>
 
@@ -55,6 +116,9 @@ const Order = ({
           ? selectedOrder.selectedColor
           : "Not provided"}
       </div>
+      
+      <div className="text-sm font-semibold text-blue-700">Street:</div>
+      <div>{selectedOrder.street ? selectedOrder.street : "Not provided"}</div>
 
       <div className="text-sm font-semibold text-blue-700">Postal Code:</div>
       <div>
@@ -64,8 +128,6 @@ const Order = ({
       <div className="text-sm font-semibold text-blue-700">City:</div>
       <div>{selectedOrder.city ? selectedOrder.city : "Not provided"}</div>
 
-      <div className="text-sm font-semibold text-blue-700">Street:</div>
-      <div>{selectedOrder.street ? selectedOrder.street : "Not provided"}</div>
 
       <div className="text-sm font-semibold text-blue-700">Selected Type:</div>
       <div>
@@ -80,51 +142,6 @@ const Order = ({
           ? selectedOrder.selectedSize
           : "Not provided"}
       </div>
-
-      <div className="col-span-2 flex flex-row justify-center gap-5 mt-4">
-        {selectedOrder.stamp?.logo && (
-          <div className="text-center">
-            <img
-              src={selectedOrder.stamp?.logo}
-              alt={`Logo Image`}
-              className="w-[50px] h-[50px] cursor-pointer transition-transform"
-              onClick={(e) => {
-                e.stopPropagation();
-                setActiveImage(selectedOrder.stamp?.logo);
-              }}
-            />
-            <span className="text-sm">Logo</span>
-          </div>
-        )}
-        {selectedOrder.stamp?.front && (
-          <div className="text-center">
-            <img
-              src={selectedOrder.stamp?.front}
-              alt={`Front Image`}
-              className="w-[50px] h-[50px] cursor-pointer transition-transform"
-              onClick={(e) => {
-                e.stopPropagation();
-                setActiveImage(selectedOrder.stamp?.front);
-              }}
-            />
-            <span className="text-sm">Front</span>
-          </div>
-        )}
-        {selectedOrder.stamp?.back && (
-          <div className="text-center">
-            <img
-              src={selectedOrder.stamp?.back}
-              alt={`Back Image`}
-              className="w-[50px] h-[50px] cursor-pointer transition-transform"
-              onClick={(e) => {
-                e.stopPropagation();
-                setActiveImage(selectedOrder.stamp?.back);
-              }}
-            />
-            <span className="text-sm">Back</span>
-          </div>
-        )}
-      </div>
       {/*<div className="text-sm font-semibold text-blue-700">
       Country:
     </div>
@@ -134,7 +151,7 @@ const Order = ({
         : "Not provided"}
     </div> */}
       <div className="col-span-2 grid grid-cols-6 gap-4">
-        {!(selectedState == "new") && (
+        {!(selectedState === "new") && (
           <button
             onClick={() => {
               updateOrderState("new");
@@ -151,7 +168,7 @@ const Order = ({
             NEW
           </button>
         )}
-        {!(selectedState == "picked") && (
+        {!(selectedState === "picked") && (
           <button
             onClick={() => {
               updateOrderState("picked");
@@ -163,7 +180,7 @@ const Order = ({
             PICKED
           </button>
         )}
-        {!(selectedState == "sent") && (
+        {!(selectedState === "sent") && (
           <button
             onClick={() => {
               updateOrderState("sent");
@@ -180,7 +197,7 @@ const Order = ({
             SENT
           </button>
         )}
-        {!(selectedState == "success") && (
+        {!(selectedState === "success") && (
           <button
             onClick={() => {
               updateOrderState("success");
@@ -197,7 +214,7 @@ const Order = ({
             SUCCESS
           </button>
         )}
-        {!(selectedState == "warning") && (
+        {!(selectedState === "warning") && (
           <button
             onClick={() => {
               updateOrderState("warning");
@@ -215,7 +232,7 @@ const Order = ({
           </button>
         )}
 
-        {!(selectedState == "archived") && (
+        {!(selectedState === "archived") && (
           <button
             onClick={() => {
               updateOrderState("archived");
@@ -233,6 +250,30 @@ const Order = ({
           </button>
         )}
       </div>
+
+      {/* Modal */}
+      {showModal && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div className="fixed inset-0 bg-black opacity-50" onClick={(e) => { e.stopPropagation(); closeModal() }}></div>
+          <div className="relative flex flex-col bg-slate-200 px-4 py-2 rounded-lg shadow-lg max-w-lg">
+            <AiFillCloseCircle className="self-end mb-1" size={24} onClick={(e) => { e.stopPropagation(); closeModal() }} />
+            <img
+              src={activeImage.src}
+              alt="Modal Image"
+              className={`max-w-full max-h-full bg-${convertColor(selectedOrder.selectedColor)}`}
+            />
+            <span className="text-center mt-1">Placement: <span className="font-semibold">{activeImage.placement}</span></span>
+            <button
+              onClick={downloadImage}
+              className="bg-blue-500 text-white rounded px-4 py-2 mt-2"
+            >
+              Download
+            </button>
+          </div>
+        </div>
+      )}
+
+
     </div>
   );
 };
