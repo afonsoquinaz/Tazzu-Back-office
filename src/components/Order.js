@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const sendEmail = async (email, subject, text) => {
+const sendEmail = async (email, subject, text, orderId) => {
   try {
     const response = await axios.post("http://localhost:8001/send-email", {
       email,
       subject,
       text,
+      orderId,
     });
 
     console.log(response.data);
@@ -138,7 +139,12 @@ const Order = ({
             onClick={() => {
               updateOrderState("new");
               setSelectedState("new");
-              sendEmail(selectedOrder.email, "Flight Status Updated", "New");
+              sendEmail(
+                selectedOrder.email,
+                "Order Status Updated",
+                "New",
+                selectedOrder.id
+              );
             }}
             className="col-start-1 border rounded text-xl font-bold text-slate-800 p-4 m-2 bg-blue-200 border-blue-400 hover:bg-blue-300"
           >
@@ -162,7 +168,12 @@ const Order = ({
             onClick={() => {
               updateOrderState("sent");
               setSelectedState("sent");
-              sendEmail(selectedOrder.email, "Flight Status Updated", "Sent");
+              sendEmail(
+                selectedOrder.email,
+                "Order Status Updated",
+                "Sent",
+                selectedOrder.id
+              );
             }}
             className="col-start-3  border rounded text-xl font-bold text-slate-800 p-4 m-2 bg-blue-200 border-blue-400 hover:bg-blue-300"
           >
@@ -176,8 +187,9 @@ const Order = ({
               setSelectedState("success");
               sendEmail(
                 selectedOrder.email,
-                "Flight Status Updated",
-                "Success"
+                "Order Status Updated",
+                "Success",
+                selectedOrder.id
               );
             }}
             className="col-start-4 border rounded text-xl font-bold text-slate-800 p-4 m-2 bg-green-200 border-green-400 hover:bg-green-300"
@@ -192,8 +204,9 @@ const Order = ({
               setSelectedState("warning");
               sendEmail(
                 selectedOrder.email,
-                "Flight Status Updated",
-                "Warning"
+                "Order Status Updated",
+                "Warning",
+                selectedOrder.id
               );
             }}
             className="col-start-5 border rounded text-xl font-bold text-slate-800 p-4 m-2 bg-red-200 border-red-400 hover:bg-red-300"
@@ -209,8 +222,9 @@ const Order = ({
               setSelectedState("archived");
               sendEmail(
                 selectedOrder.email,
-                "Flight Status Updated",
-                "Archived"
+                "Order Status Updated",
+                "Archived",
+                selectedOrder.id
               );
             }}
             className="col-start-6 border rounded text-xl font-bold text-slate-800 p-4 m-2 bg-slate-200 border-slate-400 hover:bg-slate-300"
