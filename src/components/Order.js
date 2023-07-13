@@ -61,6 +61,23 @@ const Order = ({
       <div className="text-sm font-semibold text-blue-700">Card Owner:</div>
       <div>{selectedOrder.cardOwner ? selectedOrder.cardOwner : "Not provided"}</div>
 
+      <div className="text-sm font-semibold text-blue-700">Email:</div>
+      <div>{selectedOrder.email ? selectedOrder.email : "Not provided"}</div>
+
+      <div className="text-sm font-semibold text-blue-700">Selected Type:</div>
+      <div>
+        {selectedOrder.selectedType
+          ? selectedOrder.selectedType
+          : "Not provided"}
+      </div>
+
+      <div className="text-sm font-semibold text-blue-700">Selected Size:</div>
+      <div>
+        {selectedOrder.selectedSize
+          ? selectedOrder.selectedSize
+          : "Not provided"}
+      </div>
+
       <div className="text-sm font-semibold text-blue-700">Stamp:</div>
       <div className="flex flex-row gap-5">
         {selectedOrder.stamp?.logo && (
@@ -107,9 +124,6 @@ const Order = ({
         )}
       </div>
 
-      <div className="text-sm font-semibold text-blue-700">Email:</div>
-      <div>{selectedOrder.email ? selectedOrder.email : "Not provided"}</div>
-
       <div className="text-sm font-semibold text-blue-700">Selected Color:</div>
       <div>
         {selectedOrder.selectedColor
@@ -128,18 +142,13 @@ const Order = ({
       <div className="text-sm font-semibold text-blue-700">City:</div>
       <div>{selectedOrder.city ? selectedOrder.city : "Not provided"}</div>
 
+      <div className="text-sm font-semibold text-blue-700">Country:</div>
+      <div>{selectedOrder.country ? selectedOrder.country.label : "Not provided"}</div>
 
-      <div className="text-sm font-semibold text-blue-700">Selected Type:</div>
+      <div className="text-sm font-semibold text-blue-700">Amount Paid:</div>
       <div>
-        {selectedOrder.selectedType
-          ? selectedOrder.selectedType
-          : "Not provided"}
-      </div>
-
-      <div className="text-sm font-semibold text-blue-700">Selected Size:</div>
-      <div>
-        {selectedOrder.selectedSize
-          ? selectedOrder.selectedSize
+        {selectedOrder.price
+          ? selectedOrder.price
           : "Not provided"}
       </div>
       {/*<div className="text-sm font-semibold text-blue-700">
