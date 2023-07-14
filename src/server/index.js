@@ -27,7 +27,7 @@ app.post("/send-email", async (req, res) => {
     subject: subject, // Subject line
     html: `
     <div style="background-color: #f9f9f9; padding: 50px;">
-      <h1 style="color: #444;">Update on Your TAZZU Order</h1>
+      <h1 style="color: #444;">Update on Your Trip</h1>
       <p style="color: #555;">${text}</p>
       <hr />
       <p style="color: #555;">Stay tuned for more updates from us. We appreciate your patience and support.</p>
@@ -61,19 +61,17 @@ app.post("/send-email", async (req, res) => {
   });
 });
 
-app.use(
-  "/download-image",
-  createProxyMiddleware({
-    target: "https://firebasestorage.googleapis.com",
-    changeOrigin: true,
-    onProxyRes: function (proxyRes, req, res) {
-      proxyRes.headers["Access-Control-Allow-Origin"] = "*";
-    },
-    pathRewrite: {
-      "^/download-image": "", // Remove the '/image' path prefix
-    },
-  })
-);
+app.use('/download-image', createProxyMiddleware({
+  target: 'https://firebasestorage.googleapis.com',
+  changeOrigin: true,
+  onProxyRes: function(proxyRes, req, res) {
+    proxyRes.headers["Access-Control-Allow-Origin"] = "*";
+  },
+  pathRewrite: {
+    "^/download-image": "", // Remove the '/image' path prefix
+  },
+}));
+
 
 app.listen(8001, () => {
   console.log("Server is running on port 8001");
