@@ -182,7 +182,7 @@ const Order = ({
             onClick={() => {
               updateOrderState("picked");
               setSelectedState("picked");
-              sendEmail(selectedOrder.email, "Flight Status Updated", "picked");
+              sendEmail(selectedOrder.email, "Order Status Updated", "picked");
             }}
             className="col-start-2 border rounded text-xl font-bold text-slate-800 p-4 m-2 bg-blue-200 border-blue-400 hover:bg-blue-300"
           >

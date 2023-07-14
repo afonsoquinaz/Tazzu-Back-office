@@ -27,7 +27,7 @@ app.post("/send-email", async (req, res) => {
     subject: subject, // Subject line
     html: `
     <div style="background-color: #f9f9f9; padding: 50px;">
-      <h1 style="color: #444;">Update on Your Trip</h1>
+      <h1 style="color: #444;">Update on your TAZZU Order</h1>
       <p style="color: #555;">${text}</p>
       <hr />
       <p style="color: #555;">Stay tuned for more updates from us. We appreciate your patience and support.</p>
