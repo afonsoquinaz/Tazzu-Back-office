@@ -165,12 +165,14 @@ const Order = ({
             onClick={() => {
               updateOrderState("new");
               setSelectedState("new");
+              /*
               sendEmail(
                 selectedOrder.email,
                 "Order Status Updated",
                 "New",
                 selectedOrder.id
               );
+              */
             }}
             className="col-start-1 border rounded text-xl font-bold text-slate-800 p-4 m-2 bg-blue-200 border-blue-400 hover:bg-blue-300"
           >
@@ -182,7 +184,7 @@ const Order = ({
             onClick={() => {
               updateOrderState("picked");
               setSelectedState("picked");
-              sendEmail(selectedOrder.email, "Order Status Updated", "picked");
+              sendEmail(selectedOrder.email, "Order Status Updated", "Picked");
             }}
             className="col-start-2 border rounded text-xl font-bold text-slate-800 p-4 m-2 bg-blue-200 border-blue-400 hover:bg-blue-300"
           >
@@ -228,12 +230,14 @@ const Order = ({
             onClick={() => {
               updateOrderState("warning");
               setSelectedState("warning");
+              /*
               sendEmail(
                 selectedOrder.email,
                 "Order Status Updated",
                 "Warning",
                 selectedOrder.id
               );
+              */
             }}
             className="col-start-5 border rounded text-xl font-bold text-slate-800 p-4 m-2 bg-red-200 border-red-400 hover:bg-red-300"
           >
@@ -246,12 +250,14 @@ const Order = ({
             onClick={() => {
               updateOrderState("archived");
               setSelectedState("archived");
+              /*
               sendEmail(
                 selectedOrder.email,
                 "Order Status Updated",
                 "Archived",
                 selectedOrder.id
               );
+              */
             }}
             className="col-start-6 border rounded text-xl font-bold text-slate-800 p-4 m-2 bg-slate-200 border-slate-400 hover:bg-slate-300"
           >
