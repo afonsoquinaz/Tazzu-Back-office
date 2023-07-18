@@ -28,7 +28,7 @@ app.post("/send-email", async (req, res) => {
     html: `
     <div style="background-color: #f9f9f9; padding: 50px;">
       <h1 style="color: #444;">Update on your TAZZU Order</h1>
-      <p style="color: #555;">${text}</p>
+      <p style="color: #555;">Your order was marked as ${text}.</p>
       <hr />
       <p style="color: #555;">Stay tuned for more updates from us. We appreciate your patience and support.</p>
       <p style="color: #555;">You can track your order by clicking the following link: <a href="https://tazzu.net/tracking?order_id=${orderId}" target="_blank">Track my order</a>. Stay tuned for further updates on your order. We appreciate your patience and support.</p>
