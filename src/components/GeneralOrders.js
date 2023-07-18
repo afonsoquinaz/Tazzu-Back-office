@@ -36,19 +36,35 @@ function GeneralOrders() {
   }, []);
 
   // This function updates the state of the order.
-  const updateOrderState = async (newState) => {
+  const updateOrderState = async (newState, selectedStartDate, selectedEndDate) => {
     if (selectedOrder) {
       const orderRef = doc(db, "Orders", selectedOrder.id);
       const currentDate = new Date().toISOString(); // Gets current date and time.
-      await updateDoc(orderRef, {
-        state: newState,
-        [`${newState}Date`]: currentDate, // Updates firestore with new date field.
-      });
-      setSelectedOrder((prevState) => ({
-        ...prevState,
-        state: newState,
-        [`${newState}Date`]: currentDate, // Updates local state with new date field.
-      }));
+      if (newState.toLowerCase() === 'picked' && selectedStartDate && selectedEndDate) {
+        await updateDoc(orderRef, {
+          state: newState,
+          [`${newState}Date`]: currentDate, // Updates firestore with new date field.
+          estimatedStartDate: selectedStartDate,
+          estimatedEndDate: selectedEndDate,
+        });
+        setSelectedOrder((prevState) => ({
+          ...prevState,
+          state: newState,
+          [`${newState}Date`]: currentDate, // Updates local state with new date field.
+          estimatedStartDate: selectedStartDate,
+          estimatedEndDate: selectedEndDate,
+        }));
+      } else {
+        await updateDoc(orderRef, {
+          state: newState,
+          [`${newState}Date`]: currentDate, // Updates firestore with new date field.
+        });
+        setSelectedOrder((prevState) => ({
+          ...prevState,
+          state: newState,
+          [`${newState}Date`]: currentDate, // Updates local state with new date field.
+        }));
+      }
     } else {
       alert("No order selected.");
     }
@@ -90,7 +106,7 @@ function GeneralOrders() {
             ></OrdersList>{" "}
           </div>
           <div className="col-span-7">
-            <div className="col-span-8 border p-6 rounded-lg bg-slate-300 shadow-md">
+            <div className="sticky top-4 mt-2 col-span-8 border p-6 rounded-lg bg-slate-300 shadow-md">
               {selectedOrder ? (
                 <Order
                   orders={orders}

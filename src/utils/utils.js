@@ -40,3 +40,47 @@ export function convertColor(rgb) {
 
     return closestColor;
 }
+
+
+const daysOfWeek = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];  
+
+export function getDate(date) {
+    let weekday = daysOfWeek[date.getDay()];
+    let month = months[date.getMonth()];
+    let day = date.getDate();
+    let hours = date.getHours().toString().padStart(2, "0");
+    let minutes = date.getMinutes().toString().padStart(2, "0");
+
+    return `${weekday}, ${month} ${day} ${hours}:${minutes}`;
+}
+
+export const formatDateRange = (startDate, endDate) => {
+    let startMonth = months[startDate.getMonth()];
+    let startDay = startDate.getDate();
+    let endMonth = months[endDate.getMonth()];
+    let endDay = endDate.getDate();
+    let endYear = endDate.getFullYear();
+    return `${startMonth} ${startDay} - ${endMonth} ${endDay}, ${endYear}`;
+  };
