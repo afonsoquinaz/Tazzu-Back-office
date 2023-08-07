@@ -201,7 +201,7 @@ const Order = ({
       <div>{selectedOrder.city ? selectedOrder.city : "Not provided"}</div>
 
       <div className="text-sm font-semibold text-blue-700">Country:</div>
-      <div>{selectedOrder.country ? selectedOrder.country.label : "Not provided"}</div>
+      <div>{selectedOrder.country ? (typeof (selectedOrder.country) === 'string' ? selectedOrder.country : selectedOrder.country.label) : "Not provided"}</div>
 
       <div className="text-sm font-semibold text-blue-700">Amount Paid:</div>
       <div>

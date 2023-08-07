@@ -4,7 +4,6 @@ const nodemailer = require("nodemailer");
 const cors = require("cors");
 const { createProxyMiddleware } = require("http-proxy-middleware");
 // const fs = require('fs');
-// const path = require('path');
 const app = express();
 
 app.use(express.json());
